@@ -12,43 +12,116 @@
 
     <div class="container">
 
-        <div class="title">
-            <h1>Jeremy Champion</h1>
-        </div>
+        <div class="title">Jeremy Champion</div>
 
-        <div class="showcase">
-
-            <div class="showcase-item-container">
-                <div class="showcase-item">
-                    <img src="img/shatteredGlassCover.png">
-                </div>
-                <div class="showcase-item-title">
-                    <span>Shattered Glass</span>
-                </div>
-            </div>
-
-            <div class="showcase-item-container">
-                <div class="showcase-item">
-                    <img src="img/cms.png">
-                </div>
-                <div class="showcase-item-title">
-                    <span>www.championmusicstudio.com</span>
-                </div>
-            </div>
-
-            <div class="showcase-item-container">
-                <div class="showcase-item">
-                    <img src="img/rhythmTrainer.png">
-                </div>
-                <div class="showcase-item-title">
-                    <span>Rhythm Trainer</span>
-                </div>
-            </div>
-
-        </div>
+        <div class="showcase"></div>
 
     </div>
 
+    <script>
+        
+        var showcases = [
+            {
+                title: 'Shattered Glass',
+                image: 'img/shatteredGlassCover.png',
+                href: 'https://flat5games.itch.io/shatteredglass',
+                tech: [
+                    '.NET Framework',
+                    'Monogame Framework',
+                    'C#'
+                ]
+            },
+            {
+                title: 'www.championmusicstudio.com',
+                image: 'img/cms.png',
+                href: 'https://www.championmusicstudio.com',
+                tech: [
+                    'HTML5',
+                    'CSS3',
+                    'JavaScript',
+                    'PHP'
+                ]
+            },
+            {
+                title: 'Rhythm Trainer',
+                image: 'img/rhythmTrainer.png',
+                href: 'https://jrmychmpn.github.io/RhythmTrainer',
+                tech: [
+                    'HTML5',
+                    'CSS3',
+                    'JavaScript'
+                ]
+            }
+        ];
+    
+        var showcase = document.querySelector('div.showcase');
+    
+        for (var i = 0; i < showcases.length; i++) {
+            
+            let sc = showcases[i];
+
+            let anchor = document.createElement('a');
+            anchor.classList.add('showcase-item-container');
+            //anchor.setAttribute('href', showcases[i].href);
+            anchor.setAttribute('target', '_blank');
+            anchor.addEventListener('click', function(e) {
+                showModal(sc);
+            });
+    
+            let item = document.createElement('div');
+            item.classList.add('showcase-item');
+    
+            let image = document.createElement('img');
+            image.setAttribute('src', sc.image);
+    
+            let title = document.createElement('div');
+            title.classList.add('showcase-item-title');
+            title.textContent = sc.title;
+    
+            item.appendChild(image);
+            anchor.appendChild(item);
+            anchor.appendChild(title);
+            showcase.appendChild(anchor);
+    
+        }
+    
+        function showModal(showcase) {
+
+            let activeModals = document.querySelectorAll('div.modal');
+
+            for (let i = 0; i < activeModals.length; i++) {
+                activeModals[i].remove();
+            };
+
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+
+            let modalBody = document.createElement('div');
+            modalBody.classList.add('modal-body');
+            modalBody.textContent = showcase.title;
+
+            let modalFooter = document.createElement('div');
+            modalBody.classList.add('modal-footer');
+
+            modal.appendChild(modalBody);
+            modal.appendChild(modalFooter);
+
+            let modalOverlay = document.createElement('div');
+            modalOverlay.classList.add('modal-overlay');
+
+            let body = document.querySelector('body');
+            body.appendChild(modal);
+            body.appendChild(modalOverlay);
+
+            modalOverlay.addEventListener("click", function() {
+                modal.remove();
+                modalOverlay.remove();
+            });
+            
+        }
+
+    </script>
+    
 </body>
 
 </html>
