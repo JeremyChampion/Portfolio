@@ -12,8 +12,9 @@ html, body {
 body {
     font-family: Consolas, monaco, monospace;
 	font-size: 16px;
-    background: linear-gradient(-45deg, #161616, #8b8b8b, #e5e5e5, #ffffff);
+    background: linear-gradient(to top left, #161616, #8b8b8b, #e5e5e5, #ffffff);
     background-size: 100% 100%;
+    background-attachment: fixed;
 }
 
 @keyframes gradient {
@@ -103,19 +104,58 @@ body {
     transform: translate(-50%, 0%);
     width: 600px;
     max-width: 95%;
-    height: 400px;
+    height: 80%;
     max-height: 95%;
     background-color: white;
 }
 
-.modal-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.modal .header,
+.modal .footer {
+    border: solid #dddddd 1px;
+    padding: 1rem;
+}
+
+.modal .header {
+    position: relative;
+}
+
+.modal .body {
     padding: 20px;
     overflow: auto;
+}
+
+.modal .footer {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(0%, -50%);
+
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+
+    border: solid 1px rgb(189, 189, 189);
+    border-radius: 50%;
+
+    color: rgb(189, 189, 189);
+
+    transition-property: color, border-color;
+    transition-duration: 1s;
+}
+
+.modal-close:hover {
+    cursor: pointer;
+    color: rgb(30, 30, 30);
+    border-color: rgb(30, 30, 30);
 }
 
 .modal-overlay {
@@ -127,3 +167,66 @@ body {
     height: 100%;
     background-color: #000000cf;
 }
+
+.carousel {
+    position: relative;
+    height: 25vw;
+    min-height: 320px;
+    border: solid rgb(214, 214, 214) 1px;
+}
+
+.carousel img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 100%; 
+    height: auto;
+    max-height: 100%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 20px;
+}
+
+.technologies li {
+    list-style-type: none;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+    margin-left: 0.5rem;
+
+    min-width: 150px;
+
+    color: white;
+    text-decoration: none;
+
+    transition-property: background-color, box-shadow;
+    transition-duration: 1s;
+}
+
+.btn:hover {
+    background-color:#5f8f55;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.btn-view-project {
+    background-color: #b629e0;
+}
+
+.btn-view-code {
+    background-color: #2994e0;
+}
+

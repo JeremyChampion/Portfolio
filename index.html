@@ -24,33 +24,38 @@
             {
                 title: 'Shattered Glass',
                 image: 'img/shatteredGlassCover.png',
-                href: 'https://flat5games.itch.io/shatteredglass',
+                project: 'https://flat5games.itch.io/shatteredglass',
+                code: 'https://github.com/jrmychmpn/ShatteredGlass',
                 tech: [
                     '.NET Framework',
                     'Monogame Framework',
                     'C#'
-                ]
+                ],
+                description: 'This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.'
             },
             {
                 title: 'www.championmusicstudio.com',
                 image: 'img/cms.png',
-                href: 'https://www.championmusicstudio.com',
+                project: 'https://www.championmusicstudio.com',
                 tech: [
                     'HTML5',
                     'CSS3',
                     'JavaScript',
                     'PHP'
-                ]
+                ],
+                description: 'This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.'
             },
             {
                 title: 'Rhythm Trainer',
                 image: 'img/rhythmTrainer.png',
-                href: 'https://jrmychmpn.github.io/RhythmTrainer',
+                project: 'https://jrmychmpn.github.io/RhythmTrainer',
+                code: 'https://github.com/jrmychmpn/RhythmTrainer',
                 tech: [
                     'HTML5',
                     'CSS3',
                     'JavaScript'
-                ]
+                ],
+                description: 'This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.This is a description. This is a description. This is a description. This is a description. This is a description. This is a description. This is a description.'
             }
         ];
     
@@ -87,22 +92,61 @@
     
         function showModal(showcase) {
 
-            let activeModals = document.querySelectorAll('div.modal');
-
-            for (let i = 0; i < activeModals.length; i++) {
-                activeModals[i].remove();
-            };
+            closeModal();
 
             let modal = document.createElement('div');
             modal.classList.add('modal');
+            modal.classList.add('container');
+
+            let modalHeader = document.createElement('div');
+            modalHeader.classList.add('header');
+            modalHeader.innerHTML = `<div class="section-header">${showcase.title}</div><span class="modal-close" onclick="closeModal();">X</span>`;
 
             let modalBody = document.createElement('div');
-            modalBody.classList.add('modal-body');
-            modalBody.textContent = showcase.title;
+            modalBody.classList.add('body');
+
+            let bodyHtml = `<div class="carousel"><img src="${showcase.image}" /></div>`;
+
+            if (showcase.tech && showcase.tech.length) {
+
+                bodyHtml += `<div class="section-header">Technologies</div><ul class="technologies">`;
+
+                for (let i = 0; i < showcase.tech.length; i++) {
+                    bodyHtml += `<li>${showcase.tech[i]}</li>`;
+                }
+
+                bodyHtml += `</ul>`;
+
+            }
+
+            if (showcase.description && showcase.description.length) {
+                bodyHtml += `<div class="section-header">Description</div><p>${showcase.description}</p>`;
+            }
+
+            modalBody.innerHTML = bodyHtml;
 
             let modalFooter = document.createElement('div');
-            modalBody.classList.add('modal-footer');
+            modalFooter.classList.add('footer');
 
+            if (showcase.project) {
+                let viewProject = document.createElement('a');
+                viewProject.classList.add('btn', 'btn-view-project');
+                viewProject.innerHTML = 'View Project';
+                viewProject.setAttribute('href', showcase.project);
+                viewProject.setAttribute('target', '_blank');
+                modalFooter.appendChild(viewProject);
+            }
+
+            if (showcase.code) {
+                let viewCode = document.createElement('a');
+                viewCode.classList.add('btn', 'btn-view-code');
+                viewCode.innerHTML = 'View Code';
+                viewCode.setAttribute('href', showcase.code);
+                viewCode.setAttribute('target', '_blank');
+                modalFooter.appendChild(viewCode);
+            }
+
+            modal.appendChild(modalHeader);
             modal.appendChild(modalBody);
             modal.appendChild(modalFooter);
 
@@ -114,10 +158,17 @@
             body.appendChild(modalOverlay);
 
             modalOverlay.addEventListener("click", function() {
-                modal.remove();
-                modalOverlay.remove();
+                closeModal();
             });
             
+        }
+
+        function closeModal() {
+            let activeModals = document.querySelectorAll('.modal, .modal-overlay');
+
+            for (let i = 0; i < activeModals.length; i++) {
+                activeModals[i].remove();
+            };
         }
 
     </script>
