@@ -20,7 +20,7 @@
 
     <script>
         
-        var showcases = [
+        var projects = [
             {
                 title: 'Shattered Glass',
                 image: 'img/shatteredGlassCover.png',
@@ -59,116 +59,136 @@
             }
         ];
     
-        var showcase = document.querySelector('div.showcase');
+        var showcase = document.querySelector('.showcase');
     
-        for (var i = 0; i < showcases.length; i++) {
-            
-            let sc = showcases[i];
-
-            let anchor = document.createElement('a');
-            anchor.classList.add('showcase-item-container');
-            //anchor.setAttribute('href', showcases[i].href);
-            anchor.setAttribute('target', '_blank');
-            anchor.addEventListener('click', function(e) {
-                showModal(sc);
-            });
-    
-            let item = document.createElement('div');
-            item.classList.add('showcase-item');
-    
-            let image = document.createElement('img');
-            image.setAttribute('src', sc.image);
-    
-            let title = document.createElement('div');
-            title.classList.add('showcase-item-title');
-            title.textContent = sc.title;
-    
-            item.appendChild(image);
-            anchor.appendChild(item);
-            anchor.appendChild(title);
-            showcase.appendChild(anchor);
-    
+        for (var i = 0; i < projects.length; i++) {
+            showcase.appendChild(getProject(projects[i])); 
         }
     
-        function showModal(showcase) {
+        function showModal(projectData) {
 
-            closeModal();
-
-            let modal = document.createElement('div');
-            modal.classList.add('modal');
-            modal.classList.add('container');
-
-            let modalHeader = document.createElement('div');
-            modalHeader.classList.add('header');
-            modalHeader.innerHTML = `<div class="section-header">${showcase.title}</div><span class="modal-close" onclick="closeModal();">X</span>`;
-
-            let modalBody = document.createElement('div');
-            modalBody.classList.add('body');
-
-            let bodyHtml = `<div class="carousel"><img src="${showcase.image}" /></div>`;
-
-            if (showcase.tech && showcase.tech.length) {
-
-                bodyHtml += `<div class="section-header">Technologies</div><ul class="technologies">`;
-
-                for (let i = 0; i < showcase.tech.length; i++) {
-                    bodyHtml += `<li>${showcase.tech[i]}</li>`;
-                }
-
-                bodyHtml += `</ul>`;
-
-            }
-
-            if (showcase.description && showcase.description.length) {
-                bodyHtml += `<div class="section-header">Description</div><p>${showcase.description}</p>`;
-            }
-
-            modalBody.innerHTML = bodyHtml;
-
-            let modalFooter = document.createElement('div');
-            modalFooter.classList.add('footer');
-
-            if (showcase.project) {
-                let viewProject = document.createElement('a');
-                viewProject.classList.add('btn', 'btn-view-project');
-                viewProject.innerHTML = 'View Project';
-                viewProject.setAttribute('href', showcase.project);
-                viewProject.setAttribute('target', '_blank');
-                modalFooter.appendChild(viewProject);
-            }
-
-            if (showcase.code) {
-                let viewCode = document.createElement('a');
-                viewCode.classList.add('btn', 'btn-view-code');
-                viewCode.innerHTML = 'View Code';
-                viewCode.setAttribute('href', showcase.code);
-                viewCode.setAttribute('target', '_blank');
-                modalFooter.appendChild(viewCode);
-            }
-
-            modal.appendChild(modalHeader);
-            modal.appendChild(modalBody);
-            modal.appendChild(modalFooter);
+            closeModals();
 
             let modalOverlay = document.createElement('div');
             modalOverlay.classList.add('modal-overlay');
 
-            let body = document.querySelector('body');
-            body.appendChild(modal);
-            body.appendChild(modalOverlay);
+            let modal = document.createElement('div');
+            modal.classList.add('modal', 'container');
+            modal.appendChild(getModalHeader(projectData));
+            modal.appendChild(getModalBody(projectData));
+            modal.appendChild(getModalFooter(projectData));
 
-            modalOverlay.addEventListener("click", function() {
-                closeModal();
+            let body = document.querySelector('body');
+            body.appendChild(modalOverlay);
+            body.appendChild(modal);
+            body.style.overflow = 'hidden';
+
+            modalOverlay.addEventListener('click', function() {
+                closeModals();
             });
             
         }
 
-        function closeModal() {
-            let activeModals = document.querySelectorAll('.modal, .modal-overlay');
+        function closeModals() {
+
+            let body = document.querySelector('body');
+            body.style.overflow = null;
+
+            let activeModals = body.querySelectorAll('.modal, .modal-overlay');
 
             for (let i = 0; i < activeModals.length; i++) {
                 activeModals[i].remove();
             };
+        }
+
+        function getModalHeader(projectData) {
+
+            let title = projectData.title || '[MISSING TITLE]';
+
+            let header = document.createElement('div');
+            header.classList.add('header');
+            header.innerHTML = `
+                <div class="section-header">${title}</div>
+                <span class="modal-close" onclick="closeModals();">X</span>`;
+
+            return header;
+
+        }
+
+        function getModalBody(projectData) {
+            
+            let body = document.createElement('div');
+            body.classList.add('body');
+
+            let html = `<div class="carousel"><img src="${projectData.image}" /></div>`;
+
+            if (projectData.tech && projectData.tech.length) {
+
+                html += `
+                    <div class="section-header">Technologies</div>
+                    <ul class="technologies">`;
+
+                for (let i = 0; i < projectData.tech.length; i++) {
+                    html += `<li>${projectData.tech[i]}</li>`;
+                }
+
+                html += `</ul>`;
+
+            }
+
+            if (projectData.description && projectData.description.length) {
+                html += `
+                    <div class="section-header">Description</div>
+                    <p>${projectData.description}</p>`;
+            }
+
+            body.innerHTML = html;
+
+            return body;
+
+        }
+
+        function getModalFooter(projectData) {
+            
+            let footer = document.createElement('div');
+            footer.classList.add('footer');
+
+            if (projectData.project) {
+                let viewProject = document.createElement('a');
+                viewProject.classList.add('btn', 'btn-view-project');
+                viewProject.innerHTML = 'View Project';
+                viewProject.setAttribute('href', projectData.project);
+                viewProject.setAttribute('target', '_blank');
+                footer.appendChild(viewProject);
+            }
+
+            if (projectData.code) {
+                let viewCode = document.createElement('a');
+                viewCode.classList.add('btn', 'btn-view-code');
+                viewCode.innerHTML = 'View Code';
+                viewCode.setAttribute('href', projectData.code);
+                viewCode.setAttribute('target', '_blank');
+                footer.appendChild(viewCode);
+            }
+
+            return footer;
+
+        }
+
+        function getProject(projectData) {
+
+            let project = document.createElement('a');
+            project.classList.add('showcase-item-container');
+            project.setAttribute('target', '_blank');
+            project.innerHTML = `
+                <div class="showcase-item"><img src="${projectData.image}"></div>
+                <div class="showcase-item-title">${projectData.title}</div>`;
+            project.addEventListener('click', function(e) {
+                showModal(projectData);
+            });
+    
+            return project;
+
         }
 
     </script>
