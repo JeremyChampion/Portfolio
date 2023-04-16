@@ -10,6 +10,19 @@
 
 <body>
 
+    <div class="animated-background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <div class="container">
 
         <div class="title">Jeremy Champion</div>
@@ -26,6 +39,7 @@
                 image: 'img/shatteredGlassCover.png',
                 project: 'https://flat5games.itch.io/shatteredglass',
                 code: 'https://github.com/jrmychmpn/ShatteredGlass',
+                video: 'test',
                 tech: [
                     '.NET Framework',
                     'Monogame Framework',
@@ -35,8 +49,9 @@
             },
             {
                 title: 'www.championmusicstudio.com',
-                image: 'img/cms.png',
+                image: 'img/cms_thumbnail.png',
                 project: 'https://www.championmusicstudio.com',
+                video: 'tXjpTO-F0wA',
                 tech: [
                     'HTML5',
                     'CSS3',
@@ -47,9 +62,10 @@
             },
             {
                 title: 'Rhythm Trainer',
-                image: 'img/rhythmTrainer.png',
+                image: 'img/rhythmTrainer_thumbnail.png',
                 project: 'https://jrmychmpn.github.io/RhythmTrainer',
                 code: 'https://github.com/jrmychmpn/RhythmTrainer',
+                video: '_ybJKyjjunE',
                 tech: [
                     'HTML5',
                     'CSS3',
@@ -120,7 +136,10 @@
             let body = document.createElement('div');
             body.classList.add('body');
 
-            let html = `<div class="carousel"><img src="${projectData.image}" /></div>`;
+            let html = `
+                <div class="youtube-container">
+                    <iframe src="https://www.youtube.com/embed/${projectData.video}?autoplay=1&mute=1&loop=1&rel=0&controls=0&modestbranding=0&playlist=${projectData.video}" frameborder="0"></iframe>
+                </div>`;
 
             if (projectData.tech && projectData.tech.length) {
 
